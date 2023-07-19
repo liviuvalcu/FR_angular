@@ -65,4 +65,21 @@ export class AppLoginComponent {
         this.submitted = false;
     }
 
+    registerUserPost(){
+        this.app.register(this.user).subscribe({
+            next: data =>{
+                this.storageService.saveUser(data);
+
+                this.isLoginFailed = false;
+                this.isLoggedIn = true;
+                this.roles = this.storageService.getUser().roles;
+                this.reloadPage();
+            },
+            error: err => {
+                this.isLoginFailed = true;
+                this.router.navigate(['/access'])
+            }
+        })
+    }
+
 }
