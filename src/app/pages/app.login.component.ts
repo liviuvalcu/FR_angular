@@ -3,7 +3,7 @@ import {AppService} from "../service/AppService";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {StorageService} from "../service/storageservice";
-import {User} from "./register/user";
+import {User} from "./properties/user";
 
 @Component({
   selector: 'app-login',
@@ -52,7 +52,7 @@ export class AppLoginComponent {
 
     reloadPage(): void {
        // window.location.reload();
-        this.router.navigate(['/notfound'])
+        this.router.navigate(['/properties'])
     }
 
     redirectToRegister(): void{

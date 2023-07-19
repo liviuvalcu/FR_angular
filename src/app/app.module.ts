@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
@@ -95,7 +95,9 @@ import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import {AppLoginComponent} from './pages/app.login.component';
 import {AppService} from "./service/AppService";
 import {StorageService} from "./service/storageservice";
-import {RegisterComponent} from "./pages/register/register.component";
+import {PropertyComponent} from "./pages/properties/property.component";
+import {PropertyService} from "./pages/properties/PropertyService";
+import {AuthInterceptor} from "./interceptors/AuthInterceptor";
 
 
 @NgModule({
@@ -193,11 +195,12 @@ import {RegisterComponent} from "./pages/register/register.component";
         AppNotfoundComponent,
         AppErrorComponent,
         AppAccessdeniedComponent,
-        RegisterComponent
+        PropertyComponent
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
-        AppService, StorageService
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        AppService, StorageService, PropertyService
     ],
     bootstrap: [AppComponent]
 })

@@ -4,7 +4,7 @@ import {AppNotfoundComponent} from './pages/app.notfound.component';
 import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import {AppLoginComponent} from './pages/app.login.component';
-import {RegisterComponent} from "./pages/register/register.component";
+import {PropertyComponent} from "./pages/properties/property.component";
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import {RegisterComponent} from "./pages/register/register.component";
 
             },
             {path: 'error', component: AppErrorComponent},
-            {path: 'register', component: RegisterComponent},
+            {path: 'properties', component: PropertyComponent},
             {path: 'access', component: AppAccessdeniedComponent},
             {path: 'notfound', component: AppNotfoundComponent},
             {path: 'login', component: AppLoginComponent},
