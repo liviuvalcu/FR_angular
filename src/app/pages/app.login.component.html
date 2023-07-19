@@ -1,0 +1,68 @@
+<div class="login-body">
+    <div class="logo">
+        <img src="assets/layout/images/harmony-logo.png" alt="harmony-layout"/>
+        <span class="app-name">Spring Session</span>
+    </div>
+    <div class="login-panel">
+        <img src="assets/layout/images/template/image-login-mobile.jpg" alt="harmony-layout" class="mobile"/>
+        <form role="form" (submit)="onSubmit()">
+            <div class="left-part">
+                <span class="login-panel-header">Sign in To Spring</span>
+                <span class="login-panel-subheader">Welcome, please use the form to sign-in Spring network</span>
+                <div style="margin-top:32px">
+                    <div class="col-12">
+                        <label>Enter username</label>
+                        <input type="text" autocomplete="off" pInputText class="form-control" id="username" name="username" [(ngModel)]="form.username"/>
+                    </div>
+                    <div class="col-12">
+                        <label>Enter password</label>
+                        <input type="password" autocomplete="off" pInputText feedback="false" class="form-control" id="password" name="password" [(ngModel)]="form.password"/>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="col-6">
+                        <p-button type="submit" class="p-button-raised">Login</p-button>
+                    </div>
+                    <div class="col-6">
+                        <p-button label="Register" class="p-button-raised" (onClick)="redirectToRegister()"></p-button>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+
+        <div class="right-part">
+            <img src="assets/layout/images/template/image-login.png" alt="harmony-layout"/>
+        </div>
+    </div>
+
+    <p-dialog [(visible)]="registerUser" [style]="{width: '450px'}" header="Register User" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="firstName">First Name</label>
+                <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.firstName}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.firstName">Name is required.</small>
+            </div>
+            <div class="field">
+                <label for="lastName">Last Name</label>
+                <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.lastName}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.lastName">Name is required.</small>
+            </div>
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.email}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.email">Name is required.</small>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="text" pInputText id="password" [(ngModel)]="user.password" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.password}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.password">Name is required.</small>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="registerUser()"></button>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        </ng-template>
+    </p-dialog>
+</div>
