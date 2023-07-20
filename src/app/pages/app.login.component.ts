@@ -1,16 +1,32 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppService} from "../service/AppService";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {StorageService} from "../service/storageservice";
 import {User} from "./properties/user";
+import RegistrationDao, {PropertyBean, SignUpRequest, UserBean} from "./RegistrationDao";
+
+interface Gender {
+    name: string;
+    code: string;
+}
+
+interface Count {
+    name: number;
+    code: number;
+}
+
+interface UserTypeD {
+    name: string;
+    code: string;
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './app.login.component.html',
 })
 
-export class AppLoginComponent {
+export class AppLoginComponent implements OnInit{
 
     form: any = {
         username: null,
@@ -19,15 +35,76 @@ export class AppLoginComponent {
 
     isLoggedIn = false;
     isLoginFailed = false;
-    registerUser = false;
     errorMessage = '';
     roles: string[] = [];
     user: User = {};
 
     submitted: boolean = false;
 
+    registerUser = false;
+    inputDataUser = false;
+    propertyListing = false;
+
+
+    gender: Gender[] | undefined;
+
+    userTypeD: UserTypeD[] | undefined;
+
+    selectedGender: Gender | undefined;
+
+    registration: RegistrationDao;
+    signUpRequest: SignUpRequest;
+    userBean: UserBean;
+    propertyBean: PropertyBean;
+
+    bedroomCount: Count[];
+    bathroomCount: Count[];
+
+
+
 
     constructor(private app: AppService, private http: HttpClient, private router: Router, private storageService: StorageService) {
+    }
+
+    ngOnInit(): void {
+        this.gender = [
+            {name: "Male", code:"M"},
+            {name:  "Female", code: "F"}
+        ];
+
+        this.bedroomCount = [
+            {name: 1, code: 1},
+            {name: 2, code: 2},
+            {name: 3, code: 3},
+            {name: 4, code: 4},
+            {name: 5, code: 5},
+            {name: 6, code: 6},
+            {name: 7, code: 7}
+        ];
+
+        this.bathroomCount = [
+            {name: 1, code: 1},
+            {name: 2, code: 2},
+            {name: 3, code: 3},
+            {name: 4, code: 4}
+
+        ];
+
+        this.userTypeD = [
+            {name: 'HOST', code: 'HOST' },
+            {name: 'GUEST', code: 'GUEST' }
+        ]
+        this.signUpRequest ={}
+        this.userBean ={}
+        this.propertyBean ={}
+
+
+
+        this.registration = {
+            signUpRequest : this.signUpRequest,
+            userBean : this.userBean,
+            propertyBean : this.propertyBean,
+        }
     }
 
     onSubmit(): void {
@@ -43,7 +120,7 @@ export class AppLoginComponent {
                 this.reloadPage();
             },
             error: err => {
-
+                this.storageService.clean();
                 this.isLoginFailed = true;
                 this.router.navigate(['/access'])
             }
@@ -62,7 +139,10 @@ export class AppLoginComponent {
 
     hideDialog() {
         this.registerUser = false;
+        this.inputDataUser = false;
+        this.propertyListing = false;
         this.submitted = false;
+        this.registration = {};
     }
 
     registerUserPost(){
@@ -80,6 +160,43 @@ export class AppLoginComponent {
                 this.router.navigate(['/access'])
             }
         })
+    }
+
+    registerUserWithProperty(){
+        this.app.registerUser(this.registration).subscribe({
+            next: data =>{
+                this.storageService.saveUser(data);
+
+                this.isLoginFailed = false;
+                this.isLoggedIn = true;
+                this.roles = this.storageService.getUser().roles;
+                this.reloadPage();
+            },
+            error: err => {
+                this.isLoginFailed = true;
+                this.router.navigate(['/access'])
+            }
+        })
+    }
+
+    goToUserDetails(){
+        this.registerUser = false;
+        this.inputDataUser = true;
+    }
+
+    goBackToRegistration(){
+        this.registerUser = true;
+        this.inputDataUser = false;
+    }
+
+    goToProperty(){
+        this.inputDataUser = false;
+        this.propertyListing = true;
+    }
+
+    goBackToUserDetails(){
+        this.inputDataUser = true;
+        this.propertyListing = false;
     }
 
 }

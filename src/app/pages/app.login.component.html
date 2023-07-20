@@ -41,28 +41,148 @@
         <ng-template pTemplate="content">
             <div class="field">
                 <label for="firstName">First Name</label>
-                <input type="text" pInputText id="firstName" [(ngModel)]="user.firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.firstName}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.firstName">Name is required.</small>
+                <input type="text" pInputText id="firstName" [(ngModel)]="registration.signUpRequest.firstName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.signUpRequest.firstName}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.signUpRequest.firstName">Name is required.</small>
             </div>
             <div class="field">
                 <label for="lastName">Last Name</label>
-                <input type="text" pInputText id="lastName" [(ngModel)]="user.lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.lastName}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.lastName">Name is required.</small>
+                <input type="text" pInputText id="lastName" [(ngModel)]="registration.signUpRequest.lastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.signUpRequest.lastName}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.signUpRequest.lastName">Name is required.</small>
             </div>
             <div class="field">
                 <label for="email">Email</label>
-                <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.email}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.email">Name is required.</small>
+                <input type="text" pInputText id="email" [(ngModel)]="registration.signUpRequest.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.signUpRequest.email}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.signUpRequest.email">Name is required.</small>
             </div>
             <div class="field">
-                <label for="password">Password</label>
-                <input type="text" pInputText id="password" [(ngModel)]="user.password" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.password}"/>
-                <small class="ng-dirty ng-invalid" *ngIf="submitted && !user.password">Name is required.</small>
+                <label for="r_user_password">Password</label>
+                <input type="text" pInputText id="r_user_password" [(ngModel)]="registration.signUpRequest.password" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.signUpRequest.password}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.signUpRequest.password">Name is required.</small>
             </div>
         </ng-template>
         <ng-template pTemplate="footer">
-            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="registerUserPost()"></button>
+            <button pButton pRipple label="Next" icon="pi pi-check" class="p-button-text" (click)="goToUserDetails()"></button>
             <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="inputDataUser" [style]="{width: '450px'}" header="Input User Details" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="user_firstName">First Name</label>
+                <input type="text" pInputText id="user_firstName" [(ngModel)]="registration.signUpRequest.firstName"  [disabled]="true"/>
+            </div>
+            <div class="field">
+                <label for="user_lastName">Last Name</label>
+                <input type="text" pInputText id="user_lastName" [(ngModel)]="registration.signUpRequest.lastName"  [disabled]="true"/>
+            </div>
+            <div class="field">
+                <label for="user_email">Email</label>
+                <input type="text" pInputText id="user_email" [(ngModel)]="registration.signUpRequest.email"  [disabled]="true"/>
+            </div>
+
+            <div class="field">
+                <label for="user_phone">Phone</label>
+                <input type="text" pInputText id="user_phone" [(ngModel)]="registration.userBean.phone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.userBean.phone}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.userBean.phone">Phone is required.</small>
+            </div>
+            <div class="field">
+                <label for="user_address">Address</label>
+                <input type="text" pInputText id="user_address" [(ngModel)]="registration.userBean.address" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.userBean.address}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.userBean.address">Address is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="user_country_code">Country code</label>
+                <input type="text" pInputText id="user_country_code" [(ngModel)]="registration.userBean.emCountryCode" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.userBean.emCountryCode}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.userBean.emCountryCode">Country code is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="c_code">Gender</label>
+                <p-dropdown [options]="gender" appendTo="body" [(ngModel)]="registration.userBean.gender" id="c_code" optionLabel="name"></p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="c_code">User Type</label>
+                <p-dropdown [options]="userTypeD" appendTo="body" [(ngModel)]="registration.userType" id="u_type" optionLabel="name"></p-dropdown>
+            </div>
+
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button *ngIf="registration.userType.code == 'HOST'" pButton pRipple label="Next" icon="pi pi-check" class="p-button-text" (click)="goToProperty()"></button>
+            <button *ngIf="registration.userType.code == 'GUEST'" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="registerUserWithProperty()"></button>
+            <button pButton pRipple label="Back" icon="pi pi-times" class="p-button-text" (click)="goBackToRegistration()"></button>
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-dialog [(visible)]="propertyListing" [style]="{width: '450px'}" header="Property Listing" [modal]="true" class="p-fluid">
+        <ng-template pTemplate="content">
+            <div class="field">
+                <label for="property_name">Property Name</label>
+                <input type="text" pInputText id="property_name" [(ngModel)]="registration.propertyBean.propertyName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.propertyName}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.propertyName">Name is required.</small>
+            </div>
+            <div class="field">
+                <label for="property_country">Country</label>
+                <input type="text" pInputText id="property_country" [(ngModel)]="registration.propertyBean.country" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.country}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.country">Country is required.</small>
+            </div>
+            <div class="field">
+                <label for="property_city">City</label>
+                <input type="text" pInputText id="property_city" [(ngModel)]="registration.propertyBean.city" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.city}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.city">Country is required.</small>
+            </div>
+            <div class="field">
+                <label for="bedroom_cnt">Bedroom count</label>
+                <p-dropdown [options]="bedroomCount" appendTo="body" [(ngModel)]="registration.propertyBean.bedroomCnt" id="bedroom_cnt" optionLabel="name"></p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="bathroomCnt">Bathroom count</label>
+                <p-dropdown [options]="bathroomCount" appendTo="body" [(ngModel)]="registration.propertyBean.bathroomCnt" id="bathroomCnt" optionLabel="name"></p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="guestCnt">Guest number</label>
+                <p-dropdown [options]="bathroomCount" appendTo="body" [(ngModel)]="registration.propertyBean.guestNum" id="guestCnt" optionLabel="name"></p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="property_period">Cancellation Period</label>
+                <input type="text" pInputText id="property_period" [(ngModel)]="registration.propertyBean.cancellationPeriod" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.cancellationPeriod}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.cancellationPeriod">Period is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="property_canc_type">Cancellation type</label>
+                <input type="text" pInputText id="property_canc_type" [(ngModel)]="registration.propertyBean.cancellationType" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.cancellationType}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.cancellationType">Type is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="property_price">Price per night</label>
+                <input type="text" pInputText id="property_price" [(ngModel)]="registration.propertyBean.pricePerNight" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.pricePerNight}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.pricePerNight">Price is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="property_checkin">Checkin time</label>
+                <input type="text" pInputText id="property_checkin" [(ngModel)]="registration.propertyBean.checkInTime" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.checkInTime}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.checkInTime">Price is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="property_checkOutTime">Checkout time</label>
+                <input type="text" pInputText id="property_checkOutTime" [(ngModel)]="registration.propertyBean.checkOutTime" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !registration.propertyBean.checkOutTime}"/>
+                <small class="ng-dirty ng-invalid" *ngIf="submitted && !registration.propertyBean.checkOutTime">Price is required.</small>
+            </div>
+
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button  pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="registerUserWithProperty()"></button>
+            <button pButton pRipple label="Back" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
         </ng-template>
     </p-dialog>
 </div>
