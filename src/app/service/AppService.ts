@@ -5,6 +5,8 @@ import {User} from "../pages/properties/user";
 import RegistrationDao from "../pages/RegistrationDao";
 
 const AUTH_API = "http://localhost:8080/api/v1/auth/";
+const REGISTRATION_API = "http://localhost:8080/api/v1/registration/";
+
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -32,14 +34,17 @@ export class AppService {
     register(user: User): Observable<any>{
         return this.http.post(
             AUTH_API + 'signup',
-            user,
+            {
+                user
+            }  ,
+
             httpOptions
         );
     }
 
     registerUser(user: RegistrationDao): Observable<any>{
         return this.http.post(
-            AUTH_API + 'registerUser',
+            REGISTRATION_API + 'register',
             user,
             httpOptions
         );

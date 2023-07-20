@@ -60,6 +60,11 @@ export class AppLoginComponent implements OnInit{
     bedroomCount: Count[];
     bathroomCount: Count[];
 
+    selectedUserType: UserTypeD;
+
+    selectedBedroom: Count;
+    selectedBathRoom: Count;
+    selectedGuests: Count;
 
 
 
@@ -163,6 +168,12 @@ export class AppLoginComponent implements OnInit{
     }
 
     registerUserWithProperty(){
+        this.registration.userType = this.selectedUserType.code;
+        this.registration.userBean.gender = this.selectedGender.code;
+
+        this.registration.propertyBean.bathroomCnt = this.selectedBathRoom.code;
+        this.registration.propertyBean.bedroomCnt = this.selectedBedroom.code;
+        this.registration.propertyBean.guestNum = this.selectedGuests.code;
         this.app.registerUser(this.registration).subscribe({
             next: data =>{
                 this.storageService.saveUser(data);

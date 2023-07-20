@@ -100,18 +100,18 @@
 
             <div class="field">
                 <label for="c_code">Gender</label>
-                <p-dropdown [options]="gender" appendTo="body" [(ngModel)]="registration.userBean.gender" id="c_code" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="gender" appendTo="body" [(ngModel)]="selectedGender" id="c_code" optionLabel="name"></p-dropdown>
             </div>
 
             <div class="field">
                 <label for="c_code">User Type</label>
-                <p-dropdown [options]="userTypeD" appendTo="body" [(ngModel)]="registration.userType" id="u_type" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="userTypeD" appendTo="body" [(ngModel)]="selectedUserType" id="u_type" optionLabel="name"></p-dropdown>
             </div>
 
         </ng-template>
         <ng-template pTemplate="footer">
-            <button *ngIf="registration.userType.code == 'HOST'" pButton pRipple label="Next" icon="pi pi-check" class="p-button-text" (click)="goToProperty()"></button>
-            <button *ngIf="registration.userType.code == 'GUEST'" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="registerUserWithProperty()"></button>
+            <button *ngIf="selectedUserType.name == 'HOST'" pButton pRipple label="Next" icon="pi pi-check" class="p-button-text" (click)="goToProperty()"></button>
+            <button *ngIf="selectedUserType.name == 'GUEST'" pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="registerUserWithProperty()"></button>
             <button pButton pRipple label="Back" icon="pi pi-times" class="p-button-text" (click)="goBackToRegistration()"></button>
             <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
         </ng-template>
@@ -136,17 +136,17 @@
             </div>
             <div class="field">
                 <label for="bedroom_cnt">Bedroom count</label>
-                <p-dropdown [options]="bedroomCount" appendTo="body" [(ngModel)]="registration.propertyBean.bedroomCnt" id="bedroom_cnt" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="bedroomCount" appendTo="body" [(ngModel)]="selectedBedroom" id="bedroom_cnt" optionLabel="name"></p-dropdown>
             </div>
 
             <div class="field">
                 <label for="bathroomCnt">Bathroom count</label>
-                <p-dropdown [options]="bathroomCount" appendTo="body" [(ngModel)]="registration.propertyBean.bathroomCnt" id="bathroomCnt" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="bathroomCount" appendTo="body" [(ngModel)]="selectedBathRoom" id="bathroomCnt" optionLabel="name"></p-dropdown>
             </div>
 
             <div class="field">
                 <label for="guestCnt">Guest number</label>
-                <p-dropdown [options]="bathroomCount" appendTo="body" [(ngModel)]="registration.propertyBean.guestNum" id="guestCnt" optionLabel="name"></p-dropdown>
+                <p-dropdown [options]="bathroomCount" appendTo="body" [(ngModel)]="selectedGuests" id="guestCnt" optionLabel="name"></p-dropdown>
             </div>
 
             <div class="field">
