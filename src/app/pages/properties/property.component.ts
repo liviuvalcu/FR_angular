@@ -46,6 +46,8 @@ export class PropertyComponent implements OnInit{
 
     connectedUser: string;
 
+    clonedDiscount: {[s: string]: Discount} = {};
+
     constructor(private propertyService: PropertyService, private bookingService: BookingService, private storageService: StorageService) {}
 
     registerUser() {
@@ -138,12 +140,20 @@ export class PropertyComponent implements OnInit{
     }
 
     onRowEdit(discount: Discount){
-
+        this.clonedDiscount[discount.discountLevels as string] = {...discount};
     }
     onRowEditSave(discount: Discount){
+        this.propertyService.updateDiscount(discount).subscribe({
+            next: data => {
+               delete this.clonedDiscount[discount.discountLevels as string];
+            },
+            error: err => {
 
+            }
+        });
     }
     onRowEditCancel(discount: Discount, index: number){
-
+        this.discounts[index] = this.clonedDiscount[discount.discountLevels as string];
+        delete this.clonedDiscount[discount.discountLevels as string];
     }
 }
