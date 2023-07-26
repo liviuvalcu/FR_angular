@@ -17,14 +17,11 @@ export class BookingService {
     }
 
 
-    createBooking(booking: Booking): Observable<any>{
+    createBooking(bookingBean: Booking): Observable<any>{
         return this.http.post(
             BOOKING_API + 'create',
-            {
-                booking
-            }  ,
-
-            httpOptions
+                bookingBean,
+                httpOptions
         );
     }
 

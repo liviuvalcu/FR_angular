@@ -118,12 +118,14 @@
 
                 <div class="field">
                     <label for="checkin_date">CheckIn Date</label>
-                    <input type="text" pInputText id="checkin_date" [(ngModel)]="bookingToBeSaved.checkInDate" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.checkInDate}"/>
+                    <!--input type="text" pInputText id="checkin_date" [(ngModel)]="bookingToBeSaved.checkInDate" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.checkInDate}"/-->
+                    <p-calendar appendTo="body" id="checkin_date" [(ngModel)]="bookingToBeSaved.checkInDate" dateFormat="dd.mm.yy" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.checkInDate}"></p-calendar>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !bookingToBeSaved.checkInDate">CheckIn date is required.</small>
                 </div>
                 <div class="field">
                     <label for="checkout_date">CheckOut Date</label>
-                    <input type="text" pInputText id="checkout_date" [(ngModel)]="bookingToBeSaved.checkInDate" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.checkOutDate}"/>
+                    <!--input type="text" pInputText id="checkout_date" [(ngModel)]="bookingToBeSaved.checkOutDate" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.checkOutDate}"/-->
+                    <p-calendar appendTo="body" id="checkout_date" [(ngModel)]="bookingToBeSaved.checkOutDate" dateFormat="dd.mm.yy"  required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.checkOutDate}"></p-calendar>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !bookingToBeSaved.checkOutDate">CheckOut date is required.</small>
                 </div>
 

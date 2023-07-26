@@ -57,11 +57,11 @@ export class PropertyComponent implements OnInit{
 
 
     createBooking(){
-
-
-        this.bookingService.createBooking(null).subscribe({
+        this.bookingToBeSaved.propertyName = this.propertyToCreateBooking.propertyName;
+        this.bookingService.createBooking(this.bookingToBeSaved).subscribe({
             next: data => {
-
+                this.bookingToBeSaved = {};
+                this.bookingDialogVisible = false;
                 },
             error: err => {
 
