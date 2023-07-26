@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from "rxjs";
 
 const PROPERTY_API = "http://localhost:8080/api/v1/property/";
+const DISCOUNT_API = "http://localhost:8080/api/v1/parameters/";
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -17,6 +18,10 @@ export class PropertyService {
     // @ts-ignore
     getAllProperties(): Observable<any>{
       return this.http.get(PROPERTY_API + 'all',{params: {}});
+    }
+
+    getAllDiscounts(): Observable<any>{
+        return this.http.get(DISCOUNT_API + 'all',{params: {}});
     }
 
 }

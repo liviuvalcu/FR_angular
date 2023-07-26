@@ -16,6 +16,14 @@ export interface Booking{
       propertyName?: string;
 }
 
+export interface Discount{
+      name: string;
+      minimNights: string;
+      minimalAmountSpent: number;
+      discountLevels: string;
+      discount: number;
+}
+
 
 @Component({
     providers: [MessageService],
@@ -24,6 +32,7 @@ export interface Booking{
 export class PropertyComponent implements OnInit{
 
     properties: Property[];
+    discounts: Discount[];
 
     submitted: boolean = false;
     bookingDialogVisible: boolean = false;
@@ -31,6 +40,7 @@ export class PropertyComponent implements OnInit{
     propertyToCreateBooking: Property;
     bookingToBeSaved?: Booking;
     isExpanded: boolean = false;
+    editing: boolean = false;
 
     expandedRows = {};
 
@@ -46,6 +56,17 @@ export class PropertyComponent implements OnInit{
         this.propertyService.getAllProperties().subscribe({
             next: data => {
                 this.properties = data;
+            },
+            error: err => {
+
+            }
+        });
+    }
+
+    loadAllDiscounts(){
+        this.propertyService.getAllDiscounts().subscribe({
+            next: data => {
+                this.discounts = data;
             },
             error: err => {
 
@@ -100,8 +121,11 @@ export class PropertyComponent implements OnInit{
         });
     }
 
+
+
     ngOnInit() {
       this.loadAllProperties();
+      this.loadAllDiscounts();
       this.bookingToBeSaved = {
           seniorGuestNum: 0,
           childGuestNum: 0,
@@ -111,5 +135,15 @@ export class PropertyComponent implements OnInit{
           guestEmail: ''
       }
       this.connectedUser = this.storageService.getEmail();
+    }
+
+    onRowEdit(discount: Discount){
+
+    }
+    onRowEditSave(discount: Discount){
+
+    }
+    onRowEditCancel(discount: Discount, index: number){
+
     }
 }
