@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 const USER_KEY = 'auth-user';
+const USER_EMAIL = 'user-email';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,15 @@ export class StorageService {
     public saveUser(user: any): void {
         window.sessionStorage.removeItem(USER_KEY);
         window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+
+    public saveUserEmail(email: any): void {
+        window.sessionStorage.removeItem(USER_EMAIL);
+        window.sessionStorage.setItem(USER_EMAIL, email);
+    }
+
+    public getEmail(): any {
+        return window.sessionStorage.getItem(USER_EMAIL);
     }
 
     public getUser(): any {

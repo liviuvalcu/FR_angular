@@ -120,6 +120,7 @@ export class AppLoginComponent implements OnInit{
         this.app.login(username, password).subscribe({
             next: data => {
                 this.storageService.saveUser(data);
+                this.storageService.saveUserEmail(username);
 
                 this.isLoginFailed = false;
                 this.isLoggedIn = true;

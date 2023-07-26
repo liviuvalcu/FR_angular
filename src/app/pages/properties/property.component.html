@@ -143,8 +143,7 @@
 
                 <div class="field">
                     <label for="childGuestNum">Guest Email</label>
-                    <input type="text" pInputText id="childGuestNum" [(ngModel)]="bookingToBeSaved.guestEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bookingToBeSaved.guestEmail}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !bookingToBeSaved.childGuestNum">Email  is required.</small>
+                    <input type="text" pInputText id="childGuestNum" [(ngModel)]="connectedUser" [disabled]="true"/>
                 </div>
 
 

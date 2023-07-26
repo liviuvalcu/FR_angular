@@ -4,6 +4,7 @@ import {Property} from "./property";
 import {PropertyService} from "./PropertyService";
 import {BookingService} from "../bookings/BookingService";
 import {MessageService} from "primeng/api";
+import {StorageService} from "../../service/storageservice";
 
 export interface Booking{
       checkInDate?: Date;
@@ -33,7 +34,9 @@ export class PropertyComponent implements OnInit{
 
     expandedRows = {};
 
-    constructor(private propertyService: PropertyService, private bookingService: BookingService) {}
+    connectedUser: string;
+
+    constructor(private propertyService: PropertyService, private bookingService: BookingService, private storageService: StorageService) {}
 
     registerUser() {
         this.submitted = true;
@@ -53,18 +56,21 @@ export class PropertyComponent implements OnInit{
     openCreateBooking(property: Property){
         this.bookingDialogVisible = true;
         this.propertyToCreateBooking = property;
+
     }
 
 
     createBooking(){
         this.bookingToBeSaved.propertyName = this.propertyToCreateBooking.propertyName;
+        this.bookingToBeSaved.guestEmail = this.connectedUser;
         this.bookingService.createBooking(this.bookingToBeSaved).subscribe({
             next: data => {
                 this.bookingToBeSaved = {};
                 this.bookingDialogVisible = false;
                 },
             error: err => {
-
+                this.bookingToBeSaved = {};
+                this.bookingDialogVisible = false;
             }
         });
     }
@@ -104,5 +110,6 @@ export class PropertyComponent implements OnInit{
           adultGuestNum: 0,
           guestEmail: ''
       }
+      this.connectedUser = this.storageService.getEmail();
     }
 }
