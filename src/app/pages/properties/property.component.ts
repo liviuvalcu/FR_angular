@@ -2,8 +2,22 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "./user";
 import {Property} from "./property";
 import {PropertyService} from "./PropertyService";
+import {BookingService} from "../bookings/BookingService";
+import {MessageService} from "primeng/api";
+
+export interface Booking{
+      checkInDate?: Date;
+      checkOutDate?: Date;
+      seniorGuestNum?: number;
+      adultGuestNum?: number;
+      childGuestNum?: number;
+      guestEmail?: string;
+      propertyName?: string;
+}
+
 
 @Component({
+    providers: [MessageService],
     templateUrl: './property.component.html'
 })
 export class PropertyComponent implements OnInit{
@@ -11,7 +25,15 @@ export class PropertyComponent implements OnInit{
     properties: Property[];
 
     submitted: boolean = false;
-    constructor(private propertyService: PropertyService) {}
+    bookingDialogVisible: boolean = false;
+
+    propertyToCreateBooking: Property;
+    bookingToBeSaved?: Booking;
+    isExpanded: boolean = false;
+
+    expandedRows = {};
+
+    constructor(private propertyService: PropertyService, private bookingService: BookingService) {}
 
     registerUser() {
         this.submitted = true;
@@ -28,7 +50,59 @@ export class PropertyComponent implements OnInit{
         });
     }
 
+    openCreateBooking(property: Property){
+        this.bookingDialogVisible = true;
+        this.propertyToCreateBooking = property;
+    }
+
+
+    createBooking(){
+
+
+        this.bookingService.createBooking(null).subscribe({
+            next: data => {
+
+                },
+            error: err => {
+
+            }
+        });
+    }
+
+    hideDialog(){
+        this.bookingDialogVisible = false;
+    }
+
+    expandAll(){
+        if(!this.isExpanded){
+            this.properties?.forEach(property => this.expandedRows[property.propertyName] = true);
+
+        } else {
+            this.expandedRows={};
+        }
+        this.isExpanded = !this.isExpanded;
+    }
+
+    loadBookings(property: Property){
+        this.bookingService.getBookingByPropertyName(property.propertyName).subscribe({
+            next: data => {
+                property.bookings = data;
+            },
+            error: err => {
+
+            }
+        });
+    }
+
     ngOnInit() {
       this.loadAllProperties();
+      this.bookingToBeSaved = {
+          seniorGuestNum: 0,
+          childGuestNum: 0,
+          checkInDate: null,
+          checkOutDate: null,
+          adultGuestNum: 0,
+          guestEmail: ''
+      }
     }
 }

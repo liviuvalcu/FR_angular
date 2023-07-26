@@ -1,3 +1,5 @@
+import {Booking} from "./property.component";
+
 export interface Property {
     propertyName?: string;
     pricePerNight?: string;
@@ -7,4 +9,5 @@ export interface Property {
     isRefundable?: boolean;
     cleaningFee?: number;
     bathroomCnt?: number;
+    bookings?: Booking[];
 }

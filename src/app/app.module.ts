@@ -98,6 +98,7 @@ import {StorageService} from "./service/storageservice";
 import {PropertyComponent} from "./pages/properties/property.component";
 import {PropertyService} from "./pages/properties/PropertyService";
 import {AuthInterceptor} from "./interceptors/AuthInterceptor";
+import {BookingService} from "./pages/bookings/BookingService";
 
 
 @NgModule({
@@ -200,7 +201,7 @@ import {AuthInterceptor} from "./interceptors/AuthInterceptor";
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        AppService, StorageService, PropertyService
+        AppService, StorageService, PropertyService, BookingService
     ],
     bootstrap: [AppComponent]
 })
